@@ -8,11 +8,11 @@ Vue.component('chat-message', require('./components/ChatMessage.vue'));
 const app = new Vue({
     el: '#app',
     data: {
-        messages: [],
+        chatMessages: [],
         myMessage: ''
     },
     watch: {
-        messages() {
+        chatMessages() {
             // Ensure new message is shown
             // Timeout is required for scrollHeight final value to be calculated by the browser
             setTimeout(() => {
@@ -24,9 +24,9 @@ const app = new Vue({
     methods: {
         send() {
             if (this.myMessage.length) {
-                this.messages.push({
+                this.chatMessages.push({
                     'user': 'Ivan',
-                    'body': this.myMessage
+                    'message': this.myMessage
                 })
                 this.myMessage = ''
             }

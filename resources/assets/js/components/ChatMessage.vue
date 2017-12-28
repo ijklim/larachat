@@ -1,7 +1,7 @@
 <template>
     <div>
-        <div class='badge badge-pill badge-success'>{{ message.user }}:</div>
-        <div class='pl-2'>{{ message.body }}</div>
+        <div class='badge badge-pill badge-success'>{{ chatMessage.user }}:</div>
+        <div class='pl-2'>{{ chatMessage.message }}</div>
     </div>
 </template>
 
@@ -10,7 +10,7 @@
         name: 'ChatMessage',
 
         props: {
-            message: {
+            chatMessage: {
                 default: ''
             }
         }

@@ -45,11 +45,15 @@ if (token) {
  * allows your team to easily build robust real-time web applications.
  */
 
-// import Echo from 'laravel-echo'
+import Echo from 'laravel-echo'
 
-// window.Pusher = require('pusher-js');
+window.Pusher = require('pusher-js');
 
-// window.Echo = new Echo({
-//     broadcaster: 'pusher',
-//     key: 'your-pusher-key'
-// });
+// Specify pusher key in layouts.app header section
+let pusherKey = document.head.querySelector('meta[name="pusher-key"]');
+let pusherCluster = document.head.querySelector('meta[name="pusher-cluster"]');
+window.Echo = new Echo({
+    broadcaster: 'pusher',
+    key: pusherKey,
+    cluster: pusherCluster
+});

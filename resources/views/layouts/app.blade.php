@@ -8,6 +8,10 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
+    <!-- Pusher Key, for bootstrap.js consumption -->
+    <meta name="pusher-key" content="{{ env('PUSHER_APP_KEY') }}">
+    <meta name="pusher-cluster" content="{{ env('PUSHER_APP_CLUSTER') }}">
+
     <title>{{ config('app.name') }} v{{ config('app.version') }}</title>
 
     <!-- Styles -->

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\ChatEvent;
 use Illuminate\Http\Request;
 
 class ChatController extends Controller
@@ -25,5 +26,13 @@ class ChatController extends Controller
     {
         $user = auth()->user();
         event(new ChatEvent($request->message, $user));
+    }
+
+    public function test()
+    {
+        $user = auth()->user();
+        $chatEvent = new ChatEvent('test from larachat '.date("Y-m-d H:i:s"), $user);
+        event($chatEvent);
+        return 'Sent';
     }
 }
