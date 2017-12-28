@@ -1,6 +1,10 @@
 <template>
     <div>
-        <div class='badge badge-pill badge-success'>{{ chatMessage.user }}:</div>
+        <div
+            class="badge badge-pill badge-info"
+        >
+            {{ chatMessage.userName }}:
+        </div>
         <div class='pl-2'>{{ chatMessage.message }}</div>
     </div>
 </template>

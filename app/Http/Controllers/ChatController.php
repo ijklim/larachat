@@ -25,14 +25,6 @@ class ChatController extends Controller
     public function send(Request $request)
     {
         $user = auth()->user();
-        event(new ChatEvent($request->message, $user));
-    }
-
-    public function test()
-    {
-        $user = auth()->user();
-        $chatEvent = new ChatEvent('test from larachat '.date("Y-m-d H:i:s"), $user);
-        event($chatEvent);
-        return 'Sent';
+        return event(new ChatEvent($request->message, $user));
     }
 }

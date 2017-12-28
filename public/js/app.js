@@ -997,13 +997,14 @@ var app = new Vue({
     methods: {
         send: function send() {
             if (this.myMessage.length) {
-                // this.chatMessages.push({
-                //     'user': this.user,
-                //     'message': this.myMessage
-                // })
                 axios.post('/send', {
                     message: this.myMessage
-                }).then(function (response) {});
+                }).then(function (response) {
+                    // Successful, no further action required
+                    // Echo will handle update as pusher will broadcast to sender as well
+                }).catch(function (error) {
+                    console.error(error);
+                });
                 this.myMessage = '';
             }
         }
@@ -1013,14 +1014,11 @@ var app = new Vue({
 
         // app/Events/ChatEvent.php, channel defined in method broadcastOn()
         Echo.private('channel-chat').listen('.App\\Events\\ChatEvent', function (e) {
-            // console.log('message received')
-            //console.log(e.message);
             _this.chatMessages.push({
-                'user': e.userName,
+                'userName': e.userName,
                 'message': e.message
             });
         });
-        // console.log('mounted')
     }
 });
 
@@ -49786,6 +49784,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: 'ChatMessage',
@@ -49806,8 +49808,8 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("div", { staticClass: "badge badge-pill badge-success" }, [
-      _vm._v(_vm._s(_vm.chatMessage.user) + ":")
+    _c("div", { staticClass: "badge badge-pill badge-info" }, [
+      _vm._v("\n        " + _vm._s(_vm.chatMessage.userName) + ":\n    ")
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "pl-2" }, [

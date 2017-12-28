@@ -25,15 +25,15 @@ const app = new Vue({
     methods: {
         send() {
             if (this.myMessage.length) {
-                // this.chatMessages.push({
-                //     'user': this.user,
-                //     'message': this.myMessage
-                // })
                 axios.post('/send', {
                         message: this.myMessage
                     })
                     .then((response) => {
-                        
+                        // Successful, no further action required
+                        // Echo will handle update as pusher will broadcast to sender as well
+                    })
+                    .catch(error => {
+                        console.error(error)
                     });
                 this.myMessage = ''
             }
@@ -43,13 +43,10 @@ const app = new Vue({
         // app/Events/ChatEvent.php, channel defined in method broadcastOn()
         Echo.private('channel-chat')
             .listen('.App\\Events\\ChatEvent', (e) => {
-                // console.log('message received')
-                //console.log(e.message);
                 this.chatMessages.push({
-                    'user': e.userName,
+                    'userName': e.userName,
                     'message': e.message
                 })
             });
-        // console.log('mounted')
     }
 });

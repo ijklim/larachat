@@ -16,7 +16,7 @@
 
 @section('content')
 <div id='chat-window' class="card w-100">
-    <div class='card-header bg-info'><h2 class='m-0'>Chat Room</h2></div>
+    <div class='card-header bg-light'><h2 class='m-0'>Chat Room</h2></div>
     <div id='chat-messages' class='card-body bg-light py-2'>
         <chat-message v-for='(chatMessage, index) in chatMessages' :key='index' v-bind='{chatMessage}' />
     </div>
