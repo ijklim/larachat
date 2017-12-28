@@ -981,7 +981,8 @@ var app = new Vue({
     el: '#app',
     data: {
         chatMessages: [],
-        myMessage: ''
+        myMessage: '',
+        user: 'IvanL'
     },
     watch: {
         chatMessages: function chatMessages() {
@@ -996,13 +997,30 @@ var app = new Vue({
     methods: {
         send: function send() {
             if (this.myMessage.length) {
-                this.chatMessages.push({
-                    'user': 'Ivan',
-                    'message': this.myMessage
-                });
+                // this.chatMessages.push({
+                //     'user': this.user,
+                //     'message': this.myMessage
+                // })
+                axios.post('/send', {
+                    message: this.myMessage
+                }).then(function (response) {});
                 this.myMessage = '';
             }
         }
+    },
+    mounted: function mounted() {
+        var _this = this;
+
+        // app/Events/ChatEvent.php, channel defined in method broadcastOn()
+        Echo.private('channel-chat').listen('.App\\Events\\ChatEvent', function (e) {
+            // console.log('message received')
+            //console.log(e.message);
+            _this.chatMessages.push({
+                'user': e.userName,
+                'message': e.message
+            });
+        });
+        // console.log('mounted')
     }
 });
 
@@ -1066,12 +1084,13 @@ if (token) {
 window.Pusher = __webpack_require__(37);
 
 // Specify pusher key in layouts.app header section
-var pusherKey = document.head.querySelector('meta[name="pusher-key"]');
-var pusherCluster = document.head.querySelector('meta[name="pusher-cluster"]');
+var pusherKey = document.head.querySelector('meta[name="pusher-key"]').content;
+var pusherCluster = document.head.querySelector('meta[name="pusher-cluster"]').content;
 window.Echo = new __WEBPACK_IMPORTED_MODULE_0_laravel_echo___default.a({
   broadcaster: 'pusher',
   key: pusherKey,
-  cluster: pusherCluster
+  cluster: pusherCluster,
+  encrypted: true
 });
 
 /***/ }),

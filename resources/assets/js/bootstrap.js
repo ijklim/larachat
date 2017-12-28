@@ -50,10 +50,11 @@ import Echo from 'laravel-echo'
 window.Pusher = require('pusher-js');
 
 // Specify pusher key in layouts.app header section
-let pusherKey = document.head.querySelector('meta[name="pusher-key"]');
-let pusherCluster = document.head.querySelector('meta[name="pusher-cluster"]');
+let pusherKey = document.head.querySelector('meta[name="pusher-key"]').content;
+let pusherCluster = document.head.querySelector('meta[name="pusher-cluster"]').content;
 window.Echo = new Echo({
     broadcaster: 'pusher',
     key: pusherKey,
-    cluster: pusherCluster
+    cluster: pusherCluster,
+    encrypted: true
 });
