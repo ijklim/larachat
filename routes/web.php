@@ -1,8 +1,6 @@
 <?php
 
-Route::get('/', function () {
-    return view('chat');
-});
+Route::get('/', 'ChatController@index');
 
 Auth::routes();
 

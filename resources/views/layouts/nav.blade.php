@@ -6,12 +6,32 @@
     </button>
     <div class="collapse navbar-collapse justify-content-end" id="navbarCollapse">
         <ul class="navbar-nav">
+            @guest
             <li class="nav-item">
-                <a class="nav-link" href="/">Home</a>
+                <a class="nav-link" href="/login">Login</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/">Coming soon</a>
+                <a class="nav-link" href="/register">Register</a>
             </li>
+            @else
+            <li class="nav-item dropdown">
+                <a href="#" class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    {{ Auth::user()->name }}
+                </a>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                    <a href="{{ route('logout') }}" class="dropdown-item"
+                        onclick="event.preventDefault();document.getElementById('logout-form').submit();">
+                        Logout
+                    </a>
+
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                            style="display: none;">
+                        {{ csrf_field() }}
+                    </form>
+                </div>
+            </li>
+            @endguest
         </ul>
     </div>
 </nav>
