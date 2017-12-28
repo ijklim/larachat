@@ -7,11 +7,15 @@ Real time chat app.
 * Laravel 5.5
 * Vue.js 2.0
 * Bootstrap 4
+* PHP 7
+* Pusher
+* Laravel Echo
 
 # Building the app from scratch
 
 ## Prerequisites
 
+* PHP, http://www.php.net/downloads.php
 * Laravel Installer, https://laravel.com/docs/5.5/installation
 * Composer, https://getcomposer.org
 * NPM, https://www.npmjs.com
@@ -38,6 +42,16 @@ npm install
 npm run dev
 ```
 
+## Install pusher
+
+This is required to support broadcasting events over Pusher.
+
+```bash
+composer require pusher/pusher-php-server "~3.0"
+```
+
+To avoid repeating the key and cluster in the `.env` and `resources/assets/js/bootstrap.js`, meta tags *pusher-key* and *pusher-cluster* are created in the master layout file `resources/views/layouts/app.blade.php`.
+
 ### Initialize git
 
 ```bash
@@ -58,5 +72,11 @@ The following files contain application specific configurations that should be m
   * DB_DATABASE
   * DB_USERNAME
   * DB_PASSWORD
+  * PUSHER_APP_ID
+  * PUSHER_APP_KEY
+  * PUSHER_APP_SECRET
+  * PUSHER_APP_CLUSTER
+  * BROADCAST_DRIVER=pusher
 * `config/app.php`
   * version
+  * Enable App\Providers\BroadcastServiceProvider::class
