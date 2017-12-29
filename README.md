@@ -7,8 +7,8 @@ Real time chat app.
     <img src="https://github.com/ijklim/larachat/blob/master/screenshot.jpg" width="970px">
     <br>
     Live Demo
-    <br><i>For testing use account: <strong>demo@aiwebstudio.com</strong>, password: <strong>demonow</strong></i>
   </a>
+  <br><i>For testing use account: <strong>demo@aiwebstudio.com</strong>, password: <strong>demonow</strong></i>
 </p>
 
 ## Technologies used
