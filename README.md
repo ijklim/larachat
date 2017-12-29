@@ -2,6 +2,14 @@
 
 Real time chat app.
 
+<p align="center">
+  <a href="https://larachat.aiwebstudio.com" target="_blank">
+    <img src="https://github.com/ijklim/larachat/blob/master/screenshot.jpg" width="970px">
+    <br>
+    Live Demo
+  </a>
+</p>
+
 ## Technologies used
 
 * Laravel 5.5
@@ -80,3 +88,19 @@ The following files contain application specific configurations that should be m
 * `config/app.php`
   * version
   * Enable App\Providers\BroadcastServiceProvider::class
+
+# Deployment on shared hosting
+
+* Copy all files from the `public` folder into `public_html` on the host
+* Copy all files except files from `public` into a new folder at the same level as `public_html`, e.g. `larachat`
+* Modify the settings in `larachat\.env` to reflect production environment
+  * APP_ENV=production
+  * APP_DEBUG=false
+  * APP_URL
+  * DB_CONNECTION
+  * DB_HOST
+  * DB_PORT
+  * DB_DATABASE
+  * DB_USERNAME
+  * DB_PASSWORD
+* Ensure PHP version is set to 7.0 or above
