@@ -1015,6 +1015,33 @@ var app = new Vue({
                 });
                 this.myMessage = '';
             }
+        },
+
+        /**
+         * Add user name to the list of users who are typing
+         * 
+         * @param string userName 
+         * @return void
+         */
+        addUserTyping: function addUserTyping(userName) {
+            // Add user name to the list of users who are typing
+            if (!this.usersTyping.includes(userName)) {
+                this.usersTyping.push(userName);
+            }
+        },
+
+        /**
+         * Remove user name from the list of users who are typing
+         * 
+         * @param string userName 
+         * @return void
+         */
+        removeUserTyping: function removeUserTyping(userName) {
+            if (this.usersTyping.includes(userName)) {
+                this.usersTyping = this.usersTyping.filter(function (userTyping) {
+                    return userTyping !== userName;
+                });
+            }
         }
     },
     mounted: function mounted() {
@@ -1029,19 +1056,14 @@ var app = new Vue({
             Echo.private('channel-chat').listen('.App\\Events\\ChatEvent', function (e) {
                 _this.chatMessages.push({
                     'userName': e.userName,
-                    'message': e.message
+                    'message': e.message,
+                    'time': new Date().toLocaleTimeString()
                 });
             }).listenForWhisper('typing', function (e) {
                 if (e.message.length > 0) {
-                    if (!_this.usersTyping.includes(e.userName)) {
-                        // Add user name to the list of users who are typing
-                        _this.usersTyping.push(e.userName);
-                    }
+                    _this.addUserTyping(e.userName);
                 } else {
-                    // Remove user name from list of users who are typing
-                    _this.usersTyping = _this.usersTyping.filter(function (userName) {
-                        return userName !== e.userName;
-                    });
+                    _this.removeUserTyping(e.userName);
                 }
             });
         }
@@ -49844,7 +49866,13 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", [
     _c("div", { staticClass: "badge badge-pill", class: _vm.badgeClass }, [
-      _vm._v("\n        " + _vm._s(_vm.chatMessage.userName) + ":\n    ")
+      _vm._v(
+        "\n        " +
+          _vm._s(_vm.chatMessage.userName) +
+          " • " +
+          _vm._s(_vm.chatMessage.time) +
+          ":\n    "
+      )
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "pl-2" }, [
@@ -49952,7 +49980,15 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticStyle: { position: "absolute", right: "20px" } },
+    {
+      staticStyle: {
+        position: "absolute",
+        right: "25px",
+        bottom: "70px",
+        color: "red",
+        "font-size": "0.8rem"
+      }
+    },
     _vm._l(_vm.usersTyping, function(user, index) {
       return _c("div", { key: index }, [_vm._v(_vm._s(user) + " is typing...")])
     })

@@ -46,6 +46,31 @@ const app = new Vue({
                     });
                 this.myMessage = ''
             }
+        },
+        /**
+         * Add user name to the list of users who are typing
+         * 
+         * @param string userName 
+         * @return void
+         */
+        addUserTyping(userName) {
+            // Add user name to the list of users who are typing
+            if (!this.usersTyping.includes(userName)) {
+                this.usersTyping.push(userName);
+            }
+        },
+        /**
+         * Remove user name from the list of users who are typing
+         * 
+         * @param string userName 
+         * @return void
+         */
+        removeUserTyping(userName) {
+            if (this.usersTyping.includes(userName)) {
+                this.usersTyping = this.usersTyping.filter(userTyping => {
+                    return userTyping !== userName;
+                });
+            }
         }
     },
     mounted () {
@@ -59,20 +84,15 @@ const app = new Vue({
                 .listen('.App\\Events\\ChatEvent', (e) => {
                     this.chatMessages.push({
                         'userName': e.userName,
-                        'message': e.message
+                        'message': e.message,
+                        'time': (new Date()).toLocaleTimeString()
                     })
                 })
                 .listenForWhisper('typing', (e) => {
                     if (e.message.length > 0) {
-                        if (!this.usersTyping.includes(e.userName)) {
-                            // Add user name to the list of users who are typing
-                            this.usersTyping.push(e.userName);
-                        }
+                        this.addUserTyping(e.userName);
                     } else {
-                        // Remove user name from list of users who are typing
-                        this.usersTyping = this.usersTyping.filter(userName => {
-                            return userName !== e.userName;
-                        });
+                        this.removeUserTyping(e.userName);
                     }
                 });
         }

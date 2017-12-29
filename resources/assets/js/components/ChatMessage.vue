@@ -4,7 +4,7 @@
             class="badge badge-pill"
             :class="badgeClass"
         >
-            {{ chatMessage.userName }}:
+            {{ chatMessage.userName }} • {{ chatMessage.time }}:
         </div>
         <div class='pl-2'>{{ chatMessage.message }}</div>
     </div>
