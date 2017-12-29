@@ -27,7 +27,7 @@
         button:hover {
             cursor: pointer;
         }
-
+        
         @yield('style')
     </style>
 </head>
@@ -37,6 +37,7 @@
         <div class='row'>
             @yield('content')
         </div>
+        @include('layouts.footer')
     </div>
 
     <!-- Scripts -->

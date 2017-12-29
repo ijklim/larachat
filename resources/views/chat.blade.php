@@ -5,6 +5,18 @@
         height: 85vh;
     }
 
+    @media (max-height: 710px) {
+        #chat-window {
+            height: 80vh;
+        }
+    }
+
+    @media (max-height: 520px) {
+        #chat-window {
+            height: 70vh;
+        }
+    }
+
     #chat-messages {
         overflow-y: scroll;
     }
