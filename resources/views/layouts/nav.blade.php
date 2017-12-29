@@ -14,9 +14,6 @@
                 <a class="nav-link" href="/register">Register</a>
             </li>
             @else
-            <li class="nav-item">
-                <a class="nav-link" href="/test">Test pusher</a>
-            </li>
             <li class="nav-item dropdown">
                 <a href="#" class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false">

@@ -12,6 +12,7 @@ const app = new Vue({
         chatMessages: [],
         usersTyping: [],
         myMessage: '',
+        numberOfUsers: 0,
         userName: ''
     },
     watch: {
@@ -94,6 +95,17 @@ const app = new Vue({
                     } else {
                         this.removeUserTyping(e.userName);
                     }
+                });
+            
+            Echo.join(`channel-chat`)
+                .here((users) => {
+                    this.numberOfUsers = users.length;
+                })
+                .joining((user) => {
+                    this.numberOfUsers++;
+                })
+                .leaving((user) => {
+                    this.numberOfUsers--;
                 });
         }
     }
