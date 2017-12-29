@@ -18,7 +18,8 @@
 <div id='chat-window' class="card w-100">
     <div class='card-header bg-light'><h2 class='m-0'>Chat Room</h2></div>
     <div id='chat-messages' class='card-body bg-light py-2'>
-        <chat-message v-for='(chatMessage, index) in chatMessages' :key='index' v-bind='{chatMessage}' />
+        <users-typing-status v-bind='{usersTyping}'></users-typing-status>
+        <chat-message v-for='(chatMessage, index) in chatMessages' :key='index' v-bind='{chatMessage}'></chat-message>
     </div>
     <div class='card-footer bg-white'>
         <input

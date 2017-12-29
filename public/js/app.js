@@ -976,13 +976,15 @@ __webpack_require__(11);
 window.Vue = __webpack_require__(38);
 
 Vue.component('chat-message', __webpack_require__(41));
+Vue.component('users-typing-status', __webpack_require__(50));
 
 var app = new Vue({
     el: '#app',
     data: {
         chatMessages: [],
+        usersTyping: [],
         myMessage: '',
-        user: 'IvanL'
+        userName: ''
     },
     watch: {
         chatMessages: function chatMessages() {
@@ -992,6 +994,12 @@ var app = new Vue({
                 var el = document.querySelector('#chat-messages');
                 el.scrollTop = el.scrollHeight;
             }, 100);
+        },
+        myMessage: function myMessage() {
+            Echo.private('channel-chat').whisper('typing', {
+                userName: this.userName,
+                message: this.myMessage
+            });
         }
     },
     methods: {
@@ -1012,13 +1020,31 @@ var app = new Vue({
     mounted: function mounted() {
         var _this = this;
 
-        // app/Events/ChatEvent.php, channel defined in method broadcastOn()
-        Echo.private('channel-chat').listen('.App\\Events\\ChatEvent', function (e) {
-            _this.chatMessages.push({
-                'userName': e.userName,
-                'message': e.message
+        // Get user name if available
+        this.userName = document.head.querySelector('meta[name="user-name"]').content;
+
+        if (this.userName.length) {
+            // Do not initialize Echo listen if user is not logged in
+            // app/Events/ChatEvent.php, channel defined in method broadcastOn()
+            Echo.private('channel-chat').listen('.App\\Events\\ChatEvent', function (e) {
+                _this.chatMessages.push({
+                    'userName': e.userName,
+                    'message': e.message
+                });
+            }).listenForWhisper('typing', function (e) {
+                if (e.message.length > 0) {
+                    if (!_this.usersTyping.includes(e.userName)) {
+                        // Add user name to the list of users who are typing
+                        _this.usersTyping.push(e.userName);
+                    }
+                } else {
+                    // Remove user name from list of users who are typing
+                    _this.usersTyping = _this.usersTyping.filter(function (userName) {
+                        return userName !== e.userName;
+                    });
+                }
             });
-        });
+        }
     }
 });
 
@@ -49788,6 +49814,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: 'ChatMessage',
@@ -49795,6 +49822,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     props: {
         chatMessage: {
             default: ''
+        }
+    },
+
+    computed: {
+        badgeClass: function badgeClass() {
+            var userName = document.head.querySelector('meta[name="user-name"]').content;
+
+            return userName == this.chatMessage.userName ? 'badge-primary' : 'badge-success';
         }
     }
 });
@@ -49808,7 +49843,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("div", { staticClass: "badge badge-pill badge-info" }, [
+    _c("div", { staticClass: "badge badge-pill", class: _vm.badgeClass }, [
       _vm._v("\n        " + _vm._s(_vm.chatMessage.userName) + ":\n    ")
     ]),
     _vm._v(" "),
@@ -49832,6 +49867,106 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 46 */,
+/* 47 */,
+/* 48 */,
+/* 49 */,
+/* 50 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(42)
+/* script */
+var __vue_script__ = __webpack_require__(51)
+/* template */
+var __vue_template__ = __webpack_require__(52)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources\\assets\\js\\components\\UsersTypingStatus.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-a8f628ec", Component.options)
+  } else {
+    hotAPI.reload("data-v-a8f628ec", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 51 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    name: 'UsersTypingStatus',
+
+    props: {
+        usersTyping: {
+            default: []
+        }
+    }
+});
+
+/***/ }),
+/* 52 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticStyle: { position: "absolute", right: "20px" } },
+    _vm._l(_vm.usersTyping, function(user, index) {
+      return _c("div", { key: index }, [_vm._v(_vm._s(user) + " is typing...")])
+    })
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-a8f628ec", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

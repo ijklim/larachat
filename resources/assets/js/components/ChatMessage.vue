@@ -1,7 +1,8 @@
 <template>
     <div>
         <div
-            class="badge badge-pill badge-info"
+            class="badge badge-pill"
+            :class="badgeClass"
         >
             {{ chatMessage.userName }}:
         </div>
@@ -16,6 +17,14 @@
         props: {
             chatMessage: {
                 default: ''
+            }
+        },
+
+        computed: {
+            badgeClass() {
+                let userName = document.head.querySelector('meta[name="user-name"]').content;
+
+                return userName == this.chatMessage.userName ? 'badge-primary' : 'badge-success';
             }
         }
     }
