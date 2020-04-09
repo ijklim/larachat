@@ -3,7 +3,7 @@
 Real time chat app.
 
 <p align="center">
-  <a href="http://larachat.aiwebstudio.com" target="_blank">
+  <a href="http://larachat.ivan-lim.com" target="_blank">
     <img src="https://github.com/ijklim/larachat/blob/master/screenshot.jpg" width="970px">
     <br>
     Live Demo
