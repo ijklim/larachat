@@ -94,6 +94,7 @@ The following files contain application specific configurations that should be m
 
 * Copy all files from the `public` folder into `public_html` on the host
 * Copy all files except files from `public` into a new folder at the same level as `public_html`, e.g. `larachat`
+* Change both `require` paths in `public_html\index.php` to point to the location above, e.g. `require __DIR__.'/../larachat/vendor/autoload.php';` and `$app = require_once __DIR__.'/../larachat/bootstrap/app.php';`
 * Modify the settings in `larachat\.env` to reflect production environment
   * APP_ENV=production
   * APP_DEBUG=false
