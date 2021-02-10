@@ -3,6 +3,7 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 
+// Ref: https://stackoverflow.com/questions/41983767/vue-template-or-render-function-not-defined-yet-i-am-using-neither
 import ChatMessage from './components/ChatMessage.vue';
 import UsersTypingStatus from './components/UsersTypingStatus.vue';
 
