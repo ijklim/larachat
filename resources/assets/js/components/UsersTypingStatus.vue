@@ -10,8 +10,8 @@
 
         props: {
             usersTyping: {
-                default: []
-            }
-        }
-    }
+                default: [],
+            },
+        },
+    };
 </script>

@@ -3,11 +3,15 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 
-Vue.component('chat-message', require('./components/ChatMessage.vue'));
-Vue.component('users-typing-status', require('./components/UsersTypingStatus.vue'));
+import ChatMessage from './components/ChatMessage.vue';
+import UsersTypingStatus from './components/UsersTypingStatus.vue';
 
-const app = new Vue({
-    el: '#app',
+Vue.component('chat-message', ChatMessage);
+Vue.component('users-typing-status', UsersTypingStatus);
+
+// console.log(Vue.version);
+
+const app = {
     data: {
         chatMessages: [],
         usersTyping: [],
@@ -50,8 +54,8 @@ const app = new Vue({
         },
         /**
          * Add user name to the list of users who are typing
-         * 
-         * @param string userName 
+         *
+         * @param string userName
          * @return void
          */
         addUserTyping(userName) {
@@ -62,8 +66,8 @@ const app = new Vue({
         },
         /**
          * Remove user name from the list of users who are typing
-         * 
-         * @param string userName 
+         *
+         * @param string userName
          * @return void
          */
         removeUserTyping(userName) {
@@ -77,7 +81,7 @@ const app = new Vue({
     mounted () {
         // Get user name if available
         this.userName = document.head.querySelector('meta[name="user-name"]').content;
-        
+
         if (this.userName.length) {
             // Do not initialize Echo listen if user is not logged in
             // app/Events/ChatEvent.php, channel defined in method broadcastOn()
@@ -96,7 +100,7 @@ const app = new Vue({
                         this.removeUserTyping(e.userName);
                     }
                 });
-            
+
             Echo.join(`channel-chat`)
                 .here((users) => {
                     this.numberOfUsers = users.length;
@@ -109,4 +113,6 @@ const app = new Vue({
                 });
         }
     }
-});
+};
+
+new Vue(app).$mount('#app');

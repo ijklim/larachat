@@ -23,6 +23,7 @@ Real time chat app.
 # Installation
 
 Run `composer install`
+Run `yarn run production`
 
 
 # Set up configurations
@@ -49,7 +50,7 @@ The following files contain application specific configurations that should be m
 # Deployment on shared hosting
 
 * Copy all files from the `public` folder into `public_html` on the host
-* Copy all files except files from `public` into a new folder at the same level as `public_html`, e.g. `larachat`
+* Copy all files except files from `public`, `node_modules`, and `tests` into a new folder at the same level as `public_html`, e.g. `larachat`
 * Change both `require` paths in `public_html\index.php` to point to the location above, e.g. `require __DIR__.'/../larachat/vendor/autoload.php';` and `$app = require_once __DIR__.'/../larachat/bootstrap/app.php';`
 * Modify the settings in `larachat\.env` to reflect production environment
   * APP_ENV=production
