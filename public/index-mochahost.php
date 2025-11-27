@@ -21,7 +21,7 @@ define('LARAVEL_START', microtime(true));
 |
 */
 
-require __DIR__.'/../vendor/autoload.php';
+require __DIR__.'/../server__larachat/vendor/autoload.php';
 
 /*
 |--------------------------------------------------------------------------
@@ -35,7 +35,7 @@ require __DIR__.'/../vendor/autoload.php';
 |
 */
 
-$app = require_once __DIR__.'/../bootstrap/app.php';
+$app = require_once __DIR__.'/../server__larachat/bootstrap/app.php';
 
 /*
 |--------------------------------------------------------------------------
@@ -51,9 +51,8 @@ $app = require_once __DIR__.'/../bootstrap/app.php';
 
 $kernel = $app->make(Illuminate\Contracts\Http\Kernel::class);
 
-$request = Illuminate\Http\Request::capture();
 $response = $kernel->handle(
-    $request
+    $request = Illuminate\Http\Request::capture()
 );
 
 $response->send();

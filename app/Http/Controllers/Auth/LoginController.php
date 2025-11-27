@@ -36,4 +36,10 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+
+    // Custom redirect after login
+    // protected function authenticated(Illuminate\Http\Request $request, $user)
+    // {
+    //     return redirect('/pi.php');
+    // }
 }

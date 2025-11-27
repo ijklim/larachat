@@ -73,6 +73,12 @@
                                 </a>
                             </div>
                         </div>
+
+                        <div class="form-group row">
+                            <div class="col-lg-8 offset-lg-4">
+                                <p class="mb-0">Don't have an account? <a href="{{ route('register') }}">Register here</a></p>
+                            </div>
+                        </div>
                     </form>
                 </div>
             </div>

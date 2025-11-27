@@ -114,17 +114,15 @@ return [
     | Logging Configuration
     |--------------------------------------------------------------------------
     |
-    | Here you may configure the log settings for your application. Out of
-    | the box, Laravel uses the Monolog PHP logging library. This gives
-    | you a variety of powerful log handlers / formatters to utilize.
-    |
-    | Available Settings: "single", "daily", "syslog", "errorlog"
+    | Here you may configure the log channel that gets used when writing
+    | messages to the logs. The value provided here encapsulates all
+    | of the channels documented in the "logging" configuration file.
     |
     */
 
-    'log' => env('APP_LOG', 'single'),
+    'log' => env('LOG_CHANNEL', 'stack'),
 
-    'log_level' => env('APP_LOG_LEVEL', 'debug'),
+    'log_level' => env('LOG_LEVEL', 'debug'),
 
     /*
     |--------------------------------------------------------------------------
