@@ -4,5 +4,7 @@
 /storage/*.key
 /vendor
 *.log
-.*
-.*/
+
+.env
+.env*
+!.env.example

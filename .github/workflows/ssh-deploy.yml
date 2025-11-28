@@ -1,0 +1,55 @@
+# Version: 1.0.0
+# Last Updated: 2025-11-27
+
+name: Automatic SSH Deployment
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Deploy to Server via SSH
+      uses: appleboy/ssh-action@v1.0.3
+      with:
+        host: ${{ secrets.SSH_HOST }}
+        username: ${{ secrets.SSH_USERNAME }}
+        key: ${{ secrets.SSH_KEY }}
+        port: ${{ secrets.SSH_PORT }}
+        script: |
+          echo "Starting deployment..."
+
+          # Navigate to the Laravel app directory
+          cd ~/larachat
+
+          # Pull latest changes from main branch
+          echo "Pulling latest changes from GitHub..."
+          git pull origin main
+
+          # Install/update Composer dependencies
+          echo "Installing Composer dependencies..."
+          composer install --no-dev --optimize-autoloader --no-interaction
+
+          # Install/update pnpm dependencies
+          echo "Installing pnpm dependencies..."
+          pnpm install --frozen-lockfile
+
+          # Build frontend assets
+          echo "Building frontend assets..."
+          pnpm run prod
+
+          # Run Laravel optimization
+          echo "Optimizing Laravel application..."
+          php artisan optimize
+
+          # Run database migrations (if any)
+          echo "Running database migrations..."
+          php artisan migrate --force
+
+          # Clear caches
+          echo "Clearing caches..."
+          php artisan cache:clear
+          php artisan config:clear
