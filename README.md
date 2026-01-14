@@ -73,6 +73,10 @@ Real-time chat application with modern Laravel and Vue.js stack.
    php artisan serve
    ```
 
+## Security Notes
+
+As of **January 14, 2026**, there is a known low-severity security vulnerability ([GHSA-848j-6mx2-7j84](https://github.com/advisories/GHSA-848j-6mx2-7j84)) in the `elliptic` package (a sub-dependency of `laravel-mix`). A patched version is not yet available for this vulnerability.
+
 ## Configuration
 
 The following environment variables in `.env` should be configured:

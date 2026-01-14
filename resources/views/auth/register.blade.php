@@ -90,6 +90,14 @@
                                 <button type="submit" class="btn btn-primary">
                                     Register
                                 </button>
+
+                                <button
+                                    type="button"
+                                    class="btn btn-secondary ml-2"
+                                    onclick="window.location=`{{ url('/login') }}`"
+                                >
+                                    Cancel
+                                </button>
                             </div>
                         </div>
                     </form>
